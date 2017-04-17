@@ -1,7 +1,6 @@
 package edu.osu.cs362;
 
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.Scanner;
 
 // Heavily modified code based off of Lars Vogel's Java MergeSort implementation
 // Repo @ https://github.com/vogellacompany/codeexamples-java/blob/master/de.vogella.algorithms.sort.mergesort/src/de/vogella/algorithms/sort/mergesort/Mergesort.java
@@ -12,8 +11,8 @@ public class MergeSort {
     private int arrSize;
     private int buffer;
 
-    private MergeSort(int numElements) {
-        this.arrSize = numElements;
+    private MergeSort(int size) {
+        this.arrSize = size;
         this.buffer = this.arrSize;
         this.numbers = new int[arrSize];
 
@@ -84,40 +83,30 @@ public class MergeSort {
         System.out.print("\n\n");
     }
 
-    private static int takeInput() {
-        int numElements;
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter the number of elements to generate and sort: ");
-
-        // Error checking for user input so nobody goofs it up
-        do {
-            try {
-                String temp = input.nextLine();
-                numElements = Integer.parseInt(temp);
-                break;
-            }
-            catch(Exception e) {
-                System.out.println("Bad input, please enter an integer.\n");
-            }
-        }
-        while(true);
-
-        return numElements;
-    }
-
     public static void main(String[] args) {
-        int numElements = takeInput();
-
         // Create new MergeSort object
-        MergeSort ms = new MergeSort(numElements);
+        MergeSort ms = new MergeSort(10);
 
         System.out.println("Prior to MergeSort:\n");
         ms.printNumbers();
 
-        // Sort
+        // Sort 10 objects
         ms.mergeSort(0, ms.buffer - 1);
 
         System.out.println("Post MergeSort:\n");
+        ms.printNumbers();
+
+        // Now sort 20 objects
+        System.out.println("Creating a new sort object...\n");
+        ms = new MergeSort(20);
+
+        System.out.println("Prior to 2nd MergeSort:\n");
+        ms.printNumbers();
+
+        // Sort again
+        ms.mergeSort(0, ms.buffer - 1);
+
+        System.out.println("Post 2nd MergeSort:\n");
         ms.printNumbers();
     }
 }

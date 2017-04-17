@@ -44,16 +44,19 @@ public class MergeSort {
 
     private void merge(int low, int middle, int high) {
         // Copy both pieces into auxiliary array
-        for(int i = low; i <= high; i++) {
+
+        // Should be i = low
+        for(int i = middle; i <= high; i++) {
             auxiliary[i] = numbers[i];
         }
 
         int x = low;
-        int y = middle + 1;
+        int y = middle; // Should be middle + 1
         int z = low;
 
         // Copy smallest values from either left or right side back to original
-        while(x <= middle && y <= high) {
+        // Both < operators should be <=
+        while(x < middle && y < high) {
             if(auxiliary[x] <= auxiliary[y]) {
                 numbers[z] = auxiliary[x];
                 x++;

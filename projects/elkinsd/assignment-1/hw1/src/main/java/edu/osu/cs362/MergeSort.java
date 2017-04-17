@@ -1,34 +1,123 @@
 package edu.osu.cs362;
 
-        import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.Scanner;
 
 // Heavily modified code based off of Lars Vogel's Java MergeSort implementation
 // Repo @ https://github.com/vogellacompany/codeexamples-java/blob/master/de.vogella.algorithms.sort.mergesort/src/de/vogella/algorithms/sort/mergesort/Mergesort.java
 
 public class MergeSort {
     private int[] numbers;	// Array to hold numbers
+    private int[] auxiliary;
     private int arrSize;
+    private int buffer;
 
-    public MergeSort() {
-        this.numbers = new int[10];
-        this.arrSize = 10;
+    private MergeSort(int numElements) {
+        this.arrSize = numElements;
+        this.buffer = this.arrSize;
+        this.numbers = new int[arrSize];
 
+        // Generate array of random numbers to sort
         for(int i = 0; i < arrSize; i++) {
             int random = ThreadLocalRandom.current().nextInt(0, 51);
             numbers[i] = random;
         }
+
+        // Allocate memory for array used to help sort
+        this.auxiliary = new int[arrSize];
     }
 
-    public void printNumbers() {
-        for(int i = 0; i < arrSize; i++) {
-            System.out.print(this.numbers[i]);
-            System.out.print("\n");
+    private void mergeSort(int low, int high) {
+        // Check if low value is smaller than high, if not then sort
+        int middle;
+
+        if(low < high) {
+            // Get index of middle element
+            middle = (low + high) / 2;
+            // Sort left side
+            mergeSort(low, middle);
+            // Sort right side
+            mergeSort(middle + 1, high);
+            // Combine
+            merge(low, middle, high);
         }
     }
 
-    public static void main(String[] args) {
-        MergeSort ms = new MergeSort();
+    private void merge(int low, int middle, int high) {
+        // Copy both pieces into auxiliary array
+        for(int i = low; i <= high; i++) {
+            auxiliary[i] = numbers[i];
+        }
 
+        int x = low;
+        int y = middle + 1;
+        int z = low;
+
+        // Copy smallest values from either left or right side back to original
+        while(x <= middle && y <= high) {
+            if(auxiliary[x] <= auxiliary[y]) {
+                numbers[z] = auxiliary[x];
+                x++;
+            }
+            else {
+                numbers[z] = auxiliary[y];
+                y++;
+            }
+
+            z++;
+        }
+
+        // Copy the rest of the eft side of array into target
+        while(x <= middle){
+            numbers[z] = auxiliary[x];
+            z++;
+            x++;
+        }
+    }
+
+    private void printNumbers() {
+        for(int i = 0; i < arrSize; i++) {
+            System.out.print(this.numbers[i]);
+            System.out.print(" ");
+        }
+
+        System.out.print("\n\n");
+    }
+
+    private static int takeInput() {
+        int numElements;
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter the number of elements to generate and sort: ");
+
+        // Error checking for user input so nobody goofs it up
+        do {
+            try {
+                String temp = input.nextLine();
+                numElements = Integer.parseInt(temp);
+                break;
+            }
+            catch(Exception e) {
+                System.out.println("Bad input, please enter an integer.\n");
+            }
+        }
+        while(true);
+
+        return numElements;
+    }
+
+    public static void main(String[] args) {
+        int numElements = takeInput();
+
+        // Create new MergeSort object
+        MergeSort ms = new MergeSort(numElements);
+
+        System.out.println("Prior to MergeSort:\n");
+        ms.printNumbers();
+
+        // Sort
+        ms.mergeSort(0, ms.buffer - 1);
+
+        System.out.println("Post MergeSort:\n");
         ms.printNumbers();
     }
 }

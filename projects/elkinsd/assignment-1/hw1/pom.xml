@@ -51,7 +51,7 @@
         <plugin>
             <groupId>org.evosuite.plugins</groupId>
             <artifactId>evosuite-maven-plugin</artifactId>
-            <version>${evosuiteVersion}</version>
+            <version>1.03</version>
             <executions>
                 <execution>
                     <goals>

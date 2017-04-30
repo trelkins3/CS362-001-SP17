@@ -1,0 +1,8 @@
+#!/bin/bash
+
+mvn compile
+mvn test
+
+if [[ $# == 1 ]]; then
+   mvn cobertura:cobertura
+fi

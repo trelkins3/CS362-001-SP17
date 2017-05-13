@@ -28,16 +28,16 @@ public class TimeTableTest {
 		
 		// Looks like the code will return an out of bounds exception if last event is on lastDay
 		
+		// Now run a normal set of dates
+		testTable.getApptRange(appts, new GregorianCalendar(2017, 4, 30, 18, 30, 0),
+							   new GregorianCalendar(2017, 5, 3, 18, 30, 0));
+							   
 		// Check if the catching for mixed up dates works
 		testTable.getApptRange(appts, new GregorianCalendar(2017, 5, 3, 18, 30, 0),
 							   new GregorianCalendar(2017, 4, 30, 18, 30, 0));
 		
 		testTable = new TimeTable();
 		appts.add(new Appt(0, 0, 0, 0, 0, "", ""));		// invalid appt for getValid() catch test 
-		
-		// Now run a normal set of dates
-		testTable.getApptRange(appts, new GregorianCalendar(2017, 4, 30, 18, 30, 0),
-							   new GregorianCalendar(2017, 5, 3, 18, 30, 0));
 	}
 	
 	/* Verify that deleteAppt() works */

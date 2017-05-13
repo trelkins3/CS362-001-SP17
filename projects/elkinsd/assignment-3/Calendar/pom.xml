@@ -51,7 +51,7 @@
 				<targetTests>
 				<!--A list of your tests available to be run.-->
 					<param>edu.osu.cs362.ApptTest</param>
-					<param>edu.osu.cs362.CalDaytest</param>
+					<param>edu.osu.cs362.CalDayTest</param>
 					<param>edu.osu.cs362.TimeTableTest</param>
 				</targetTests>
 				<avoidCallsTo><!--A List of packages, classes and methods which are to be considered outside the scope of mutation.-->

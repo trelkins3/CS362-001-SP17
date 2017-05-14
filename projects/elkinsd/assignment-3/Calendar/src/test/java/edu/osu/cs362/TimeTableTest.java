@@ -31,31 +31,31 @@ public class TimeTableTest {
 		// Now run a normal set of dates
 		testTable.getApptRange(appts, new GregorianCalendar(2017, 4, 30, 18, 30, 0),
 							   new GregorianCalendar(2017, 5, 3, 18, 30, 0));
-							   
-		// Check if the catching for mixed up dates works
-		testTable.getApptRange(appts, new GregorianCalendar(2017, 5, 3, 18, 30, 0),
-							   new GregorianCalendar(2017, 4, 30, 18, 30, 0));
-		
+
 		testTable = new TimeTable();
 		appts.add(new Appt(0, 0, 0, 0, 0, "", ""));		// invalid appt for getValid() catch test 
+		testTable.getApptRange(appts, new GregorianCalendar(2017, 4, 30, 18, 30, 0),
+							   new GregorianCalendar(2017, 5, 3, 18, 30, 0));
 	}
 	
 	/* Verify that deleteAppt() works */
 	@Test
 	public void test02()	throws Throwable	{
 		LinkedList<Appt> appts = new LinkedList<Appt>();
-		appts.add(new Appt(15, 30, 30, 4, 2017, "Birthday", "Birthday Party!"));
+		Appt appointment = new Appt(15, 30, 30, 4, 2017, "Birthday", "Birthday Party!");
+		
+		appts.add(appointment);	// Using the actual object here fixed the problems I was having...
+								// Something to do with pointers and linked lists, I'm guessing.					
 		appts.add(new Appt(18, 30, 30, 4, 2017, "Work", "Gotta go to work!"));
 		appts.add(new Appt(10, 30, 1, 5, 2017, "Concert", "Get there 30 minutes early!")); 
+
+		// Normal case
+		assertNotNull(testTable.deleteAppt(appts, appointment));
 		
 		// Null cases
 		assertTrue(testTable.deleteAppt(appts, null) == null);
 		assertTrue(testTable.deleteAppt(null, 
-					new Appt(15, 30, 30, 4, 2017, "Birthday", "Birthday Party!")) == null);
-
-		// Normal case
-		assertTrue(testTable.deleteAppt(appts, 
-					new Appt(15, 30, 30, 4, 2017, "Birthday", "Birthday Party!")) == null);
+					new Appt(10, 30, 30, 4, 2017, "Birthday", "Birthday Party!")) == null);
 					
 		// Invalid appt
 		assertTrue(testTable.deleteAppt(appts, 

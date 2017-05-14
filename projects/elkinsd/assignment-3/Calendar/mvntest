@@ -3,5 +3,9 @@
 mvn test
 
 if [[ $# == 1 ]]; then
-   mvn cobertura:cobertura
+	if [[ $1 == "c" ]]; then
+		mvn cobertura:cobertura
+	elif [[ $1 == "p" ]]; then
+		mvn org.pitest:pitest-maven:mutationCoverage
+	fi
 fi

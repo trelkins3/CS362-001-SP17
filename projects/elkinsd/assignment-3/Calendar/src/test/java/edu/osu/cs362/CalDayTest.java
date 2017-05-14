@@ -42,11 +42,9 @@ public class CalDayTest {
 	/* Test adding appointments to list. */
 	@Test
 	public void test03()	throws Throwable {
-		// Add valid appointment
+		// Add valid appointments
 		testCal.addAppt(new Appt(19, 30, 30, 04, 2017, "Work", "Gotta go to work!"));
 		assertEquals(1, testCal.getSizeAppts()); 
-		
-		// Add second valid appointment
 		testCal.addAppt(new Appt(20, 30, 30, 04, 2017, "Meeting", "Have a meeting!"));
 		assertEquals(2, testCal.getSizeAppts()); 
 		
@@ -57,6 +55,24 @@ public class CalDayTest {
 		// Add appointment before other appointments
 		testCal.addAppt(new Appt(15, 30, 30, 04, 2017, "Work", "Gotta go to work!"));
 		assertEquals(3, testCal.getSizeAppts()); 
+		
+		// Mutation case handling var
+		Appt appt1 = testCal.getAppts().get(0);
+		
+		// Add another appointment at the end
+		testCal.addAppt(new Appt(15, 30, 30, 04, 2017, "Run", "Go for a run!"));
+		assertEquals(4, testCal.getSizeAppts()); 
+		
+		// Second mutation case handling var
+		Appt appt2 = testCal.getAppts().get(1);
+		
+		// If the conditional boundary is changed from '>' to '>=', appt1 == appt2 and this fails
+		assertNotSame(appt1, appt2); 
+		
+		// Make sure that the appointments are in correct order...
+		for(int i = 0; i < (testCal.getAppts().size() - 1) ; i++){
+			assertTrue(testCal.getAppts().get(i+1).getStartHour() >= testCal.getAppts().get(i).getStartHour());
+		}
 	}
 	
 	/* Test if toString() functions correctly. */
@@ -69,6 +85,9 @@ public class CalDayTest {
 		testCal.addAppt(new Appt(19, 30, 30, 04, 2017, "Work", "Gotta go to work!"));
 		testCal.addAppt(new Appt(15, 30, 30, 04, 2017, "Work", "Gotta go to work!"));
 		assertTrue(testCal.toString() != "");
+		
+		// Mutation coverage - kills if iterator conditional is bad
+		assertTrue(testCal.toString().length() > 68);
 	}
 	
 	/* Test branching behavior of iterator(). */

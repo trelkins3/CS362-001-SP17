@@ -40,7 +40,7 @@ public class ApptTest {
 		assertEquals("Birthday Party", appt.getTitle());
 		assertEquals("This is my birthday party.", appt.getDescription());         		
 	}
-	 
+
 	/* Test that the set methods work as expected */
 	@Test
 	public void test02()	throws Throwable	{

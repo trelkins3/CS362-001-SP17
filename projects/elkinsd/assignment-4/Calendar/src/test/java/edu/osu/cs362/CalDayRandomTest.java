@@ -16,23 +16,22 @@ public class CalDayRandomTest {
 	
 	// Generate random appointment to add to CalDay
 	public static Appt generateRandomAppt(Random random) {
-		int startHour = (int) ValuesGenerator.getRandomIntBetween(random, -75, 75);
-		int startMinute = (int) ValuesGenerator.getRandomIntBetween(random, -75, 75);
-		int startDay = (int) ValuesGenerator.getRandomIntBetween(random, -75, 75);
-		int startMonth = (int) ValuesGenerator.getRandomIntBetween(random, -75, 75);
-		int startYear = (int) ValuesGenerator.getRandomIntBetween(random, 0, 3000);
+		int startHour = (int) ValuesGenerator.getRandomIntBetween(random, 0, 26);
+		int startMinute = (int) ValuesGenerator.getRandomIntBetween(random, 0, 65);
+		int startDay = (int) ValuesGenerator.getRandomIntBetween(random, 0, 35);
+		int startMonth = (int) ValuesGenerator.getRandomIntBetween(random, 0, 13);
+		int startYear = (int) ValuesGenerator.getRandomIntBetween(random, 2000, 2020);
 		String title = "Birthday Party";
 		String description = "This is my birthday party.";
 			
-		//Construct a new CalDay object with the initial data	 
 		Appt appt = new Appt(startHour,
-				    startMinute ,
-				    startDay ,
-				    startMonth ,
-				    startYear ,
-				    title,
-				    description);
-		
+						startMinute ,
+						startDay ,
+						startMonth ,
+						startYear ,
+						title,
+						description);
+			
 		return appt;
 	}
 	

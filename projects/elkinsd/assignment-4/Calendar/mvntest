@@ -2,8 +2,10 @@
 
 if [[ $# == 1 ]]; then
 	if [[ $1 == "c" ]]; then
-		mvn cobertura:cobertura
+		mvn clean
 	elif [[ $1 == "p" ]]; then
 		mvn org.pitest:pitest-maven:mutationCoverage
 	fi
 fi
+
+mvn cobertura:cobertura

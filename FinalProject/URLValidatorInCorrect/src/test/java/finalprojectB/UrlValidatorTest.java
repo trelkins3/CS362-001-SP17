@@ -18,15 +18,12 @@ package finalprojectB;
 
 import junit.framework.TestCase;
 
-
-
-
-
 /**
  * Performs Validation Test for url validations.
  *
  * @version $Revision: 1128446 $ $Date: 2011-05-27 13:29:27 -0700 (Fri, 27 May 2011) $
  */
+ 
 public class UrlValidatorTest extends TestCase {
 
    private boolean printStatus = false;
@@ -36,14 +33,39 @@ public class UrlValidatorTest extends TestCase {
       super(testName);
    }
 
-   
-   
+
    public void testManualTest()
    {
-	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-	   System.out.println(urlVal.isValid("http://www.amazon.com"));
+	   // Not sure what's broken and what isn't, so we're gonna check all of the standard options
 	   
+	   // Check standard options
+	   UrlValidator urlVal = new UrlValidator();
+	   assertTrue(urlVal.isValid("http://www.amazon.com"));
+	   assertFalse(urlVal.isValid("www.amazon.com"));	// Should fail because no scheme
+	   assertFalse(urlVal.isValid(null));
+	   assertFalse(urlVal.isValid("汉"));	// Should fail because Non-ASCII
+	   assertFalse(urlVal.isValid("http://amazon.com///test1"));
 	   
+	   // Check all scheme option
+	   urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+	   assertTrue(urlVal.isValid("htt://www.amazon.com"));	
+	   assertTrue(urlVal.isValid("ftp://www.amazon.com"));	
+	   assertTrue(urlVal.isValid("h://www.amazon.com"));	
+	   assertFalse(urlVal.isValid("www.amazon.com"));				// Should fail because no scheme
+	   assertFalse(urlVal.isValid("http://localhost/home/index.html"));	// Should be false
+	   
+	   // Check local URL option
+	   urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_LOCAL_URLS);
+	   /* FOUND A FAIL CASE HERE - Both lines 54 and 55 fail. */
+	   //assertTrue(urlVal.isValid("http://localhost/home/index.html"));	// Should be true
+	   //assertTrue(urlVal.isValid("http://localhost/index.html"));	// Should be true
+	   assertFalse(urlVal.isValid("localhost/test/index.html"));	// No scheme
+	   
+	   // Check double slashes option
+	   urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_2_SLASHES);
+	   assertTrue(urlVal.isValid("http://www.amazon.com/test1//test2"));
+	   /* EITHER A BUG OR AN OVERSIGHT? - More than 2 slashes can be added when the option is on */
+	   //assertFalse(urlVal.isValid("http://www.amazon.com/test1///test2"));
    }
    
    
@@ -74,7 +96,6 @@ public class UrlValidatorTest extends TestCase {
     * running through all possible permutations of their combinations.
     *
     * @param testObjects Used to create a url.
-    */
-   
+	*/
 
 }

@@ -1,3 +1,2 @@
-Final Project:
-
-Final Project PART-B: 6.12.2017 (first day of the final week)
+Final Project Part B submission for Donald "Trey" Elkins (elkinsd) and
+Mitch Hoesing (hoesingm), submitting 6/11/2017.

@@ -3,3 +3,5 @@ This is my personal fork of the instructor's repository for Oregon State Univers
 Ali Aburas, Spring 2017
 
 Adjustments and testing programming done by Donald "Trey" Elkins, 2017.
+
+Class focused on software testing. Topics included unit testing, testing coverage, debugging utilities, mutation testing, etc.
